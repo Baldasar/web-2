@@ -1,13 +1,16 @@
 import Head from "next/head";
+import "../styles/login.css";
+import "../styles/admin.css";
+
 import "../styles/header.css";
+import "../styles/insertUser.css";
+import "../styles/showUsers.css";
 
 export default function App({ Component, pageProps }) {
   return (
     <>
-      <Head>
-        
-      </Head>
+      <Head></Head>
       <Component {...pageProps} />
     </>
   );
-};
+}

@@ -1,11 +1,4 @@
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f0f0f0;
-    margin: 0;
-    padding: 0;
-}
-
-h1 {
+.title {
     padding: 20px;
     background-color: #333;
     color: #fff;
@@ -13,7 +6,7 @@ h1 {
     margin-right: auto;
 }
 
-header {
+.header {
     background-color: #333;
     color: #fff;
     padding: 20px;
@@ -21,8 +14,48 @@ header {
     flex-direction: row;
 }
 
-header button {
+.loginLink {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #28a745;
+    color: #fff;
+    text-decoration: none;
+    margin: 15px 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 16px;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+    width: 150px;
+}
+
+.loginLink:hover {
+    background-color: #218838;
+}
+
+.adminButton {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     background-color: #007bff;
+    color: #fff;
+    text-decoration: none;
+    margin: 15px 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 16px;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+    width: 150px;
+}
+
+.adminButton:hover {
+    background-color: #024083;
+}
+
+.logoutButton {
+    background-color: #dc3545;
     color: #fff;
     border: none;
     margin: 15px 5px;
@@ -34,6 +67,6 @@ header button {
     width: 150px;
 }
 
-header button:hover {
-    background-color: #024083;
+.logoutButton:hover {
+    background-color: #bd2130;
 }
