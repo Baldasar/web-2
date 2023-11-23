@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { Header } from "../components/Header";
+import { InsertArticle } from "@/components/InsertArtile";
 import { InsertUser } from "../components/InsertUser";
 import { ShowUsers } from "../components/ShowUsers";
 import { useRouter } from "next/router";
 
 export default function Admin() {
+  const [showInsertArticle, setShowInsertArticle] = useState(false);
   const [showInsertUser, setShowInsertUser] = useState(false);
   const [showUserList, setShowUserList] = useState(false);
 
@@ -17,13 +19,21 @@ export default function Admin() {
     }
   }, []);
 
+  const toggleInsertArticle = () => {
+    setShowInsertArticle(!showInsertArticle);
+    setShowInsertUser(false);
+    setShowUserList(false);
+  }
+
   const toggleInsertUser = () => {
     setShowInsertUser(!showInsertUser);
+    setShowInsertArticle(false);
     setShowUserList(false);
   };
 
   const toggleUserList = () => {
     setShowUserList(!showUserList);
+    setShowInsertArticle(false);
     setShowInsertUser(false);
   };
 
@@ -32,7 +42,9 @@ export default function Admin() {
       <Header />
       <div className="container">
         <div className="menu">
-          <button className="menu-button">Cadastrar Artigo</button>
+          <button className="menu-button" onClick={toggleInsertArticle}>
+            Cadastrar Artigo
+          </button>
           <button className="menu-button" onClick={toggleInsertUser}>
             Cadastrar Usuário
           </button>
@@ -42,6 +54,7 @@ export default function Admin() {
           </button>
         </div>
 
+        {showInsertArticle && <InsertArticle/>}
         {showInsertUser && <InsertUser />}
         {showUserList && <ShowUsers />}
       </div>

@@ -80,7 +80,7 @@ export default function Login() {
           </div>
           <div className="button-container">
             <Link className="custom-button home-button" href="/">
-              Home
+              Voltar
             </Link>
             <button type="submit" className="custom-button login-button">
               Entrar
