@@ -30,6 +30,14 @@ export function ShowUsers() {
   };
 
   const handleSaveClick = async (editedUser) => {
+    const userConfirmation = window.confirm(
+      "Tem certeza que deseja salvar as alterações?"
+    );
+
+    if (!userConfirmation) {
+      return;
+    }
+
     try {
       const response = await fetch(
         `http://localhost:8080/api/users/${editedUser._id}`,
@@ -48,13 +56,16 @@ export function ShowUsers() {
 
       setEditingUserId(null);
 
-      // Atualizar a lista de usuários após salvar as alterações
       const updatedUsers = users.map((user) =>
         user._id === editedUser._id ? editedUser : user
       );
       setUsers(updatedUsers);
+
+      alert("Usuário atualizado com sucesso!");
     } catch (error) {
       console.error("Erro ao salvar usuário:", error.message);
+
+      alert(`Erro ao salvar usuário: ${error.message}`);
     }
   };
 
@@ -110,7 +121,7 @@ export function ShowUsers() {
                 <input
                   className="input-field"
                   type="text"
-                  value={user.author_name}
+                  value={user.author_name || ""}
                   onChange={(e) =>
                     setUsers((prevUsers) =>
                       prevUsers.map((u) =>
@@ -167,9 +178,8 @@ export function ShowUsers() {
             </td>
             <td>
               {editingUserId === user._id ? (
-                <input
+                <select
                   className="input-field"
-                  type="text"
                   value={user.author_level}
                   onChange={(e) =>
                     setUsers((prevUsers) =>
@@ -180,7 +190,10 @@ export function ShowUsers() {
                       )
                     )
                   }
-                />
+                >
+                  <option value="admin">Admin</option>
+                  <option value="default">Default</option>
+                </select>
               ) : (
                 user.author_level
               )}
