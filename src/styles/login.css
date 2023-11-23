@@ -8,6 +8,7 @@
 .full-screen-container {
     display: flex;
     justify-content: center;
+    background-color: #e6e6e6;
     align-items: center;
     min-height: 100vh;
     margin: 0;
@@ -19,6 +20,7 @@
     padding: 40px;
     border-radius: 5px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    background-color: #fff;
 }
 
 .login-form {
@@ -47,6 +49,7 @@
 .input {
     padding: 10px;
     border: 1px solid #ccc;
+    background-color: #f0f0f0;
     border-radius: 5px;
     flex: 1;
     user-select: none;
@@ -66,17 +69,19 @@
 }
 
 .login-button {
-    background-color: #007bff;
+    background-color: #28a745;
+    transition: 0.3s;
 }
 
 .login-button:hover {
-    background-color: #0056b3;
+    background-color: #218838;
 }
 
 .home-button {
-    background-color: #28a745;
+    background-color: #d14431;
+    transition: 0.3s;
 }
 
 .home-button:hover {
-    background-color: #218838;
+    background-color: #b63a2a;
 }

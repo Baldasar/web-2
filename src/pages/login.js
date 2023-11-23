@@ -23,25 +23,25 @@ export default function Login() {
       author_pwd: password,
     };
 
-    // try {
-    //   const response = await fetch("http://localhost:8080/api/login", {
-    //     method: "POST",
-    //     headers: {
-    //       "Content-Type": "application/json",
-    //     },
-    //     body: JSON.stringify(data),
-    //   });
+    try {
+      const response = await fetch("http://localhost:8080/api/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
 
-    //   const result = await response.json();
+      const result = await response.json();
 
-    //   if (response.ok) {
-    //     alert(result.message);
-    //   } else {
-    //     alert(result.message);
-    //   }
-    // } catch (error) {
-    //   alert(error.message)
-    // }
+      if (response.ok) {
+        alert(result.message);
+      } else {
+        alert(result.message);
+      }
+    } catch (error) {
+      alert(error.message)
+    }
   };
 
   return (
