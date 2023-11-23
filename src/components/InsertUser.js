@@ -41,6 +41,8 @@ export function InsertUser() {
       const data = await response.json();
       console.log("Usuário cadastrado com sucesso:", data);
 
+      alert("Usuário cadastrado com sucesso");
+
       setFormData({
         author_name: "",
         author_email: "",
@@ -51,6 +53,7 @@ export function InsertUser() {
       });
     } catch (error) {
       console.error("Erro ao cadastrar usuário:", error.message);
+      alert("Erro ao cadastrar usuário. Por favor, tente novamente.");
     } finally {
       setIsLoading(false);
     }
@@ -119,8 +122,8 @@ export function InsertUser() {
             value={formData.author_level}
             onChange={handleChange}
           >
-            <option value="admin">Administrador</option>
-            <option value="default">Usuário comum</option>
+            <option value="admin">Admin</option>
+            <option value="default">Default</option>
           </select>
         </div>
       </div>
