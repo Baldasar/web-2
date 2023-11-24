@@ -38,7 +38,24 @@ export function InsertArticle() {
 
     try {
       setIsLoading(true);
-
+  
+      const response = await fetch("http://localhost:8080/api/articles", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ article: formData }),
+      });
+  
+      if (!response.ok) {
+        throw new Error("Erro ao cadastrar artigo");
+      }
+  
+      const data = await response.json();
+      console.log("Artigo cadastrado com sucesso:", data);
+  
+      alert("Artigo cadastrado com sucesso");
+  
       setFormData({
         kb_id: "",
         kb_title: "",
@@ -53,7 +70,8 @@ export function InsertArticle() {
         kb_published_date: formData.kb_published_date,
       });
     } catch (error) {
-      console.error("Error submitting article:", error.message);
+      console.error("Erro ao cadastrar artigo:", error.message);
+      alert("Erro ao cadastrar artigo. Por favor, tente novamente.");
     } finally {
       setIsLoading(false);
     }
