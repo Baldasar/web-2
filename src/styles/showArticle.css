@@ -31,6 +31,7 @@
 
 .action-buttons {
   display: flex;
+  flex-direction: column;
   gap: 8px;
 }
 
@@ -45,27 +46,35 @@
 .save-button {
   background-color: #4caf50;
   color: white;
+  transition: 0.3s;
+}
+.save-button:hover {
+  background-color: #409443;
 }
 
 .cancel-button {
   background-color: #ccc;
   color: black;
+  transition: 0.3s;
+}
+.cancel-button:hover {
+  background-color: #9c9c9c;
 }
 
 .edit-button {
   background-color: #008CBA;
   color: white;
+  transition: 0.3s;
+}
+.edit-button:hover {
+  background-color: #00688B;
 }
 
 .delete-button {
   background-color: #f44336;
   color: white;
+  transition: 0.3s;
 }
-
-.edit-button:hover {
-  background-color: #00688B;
-}
-
 .delete-button:hover {
   background-color: #c0392b;
 }
