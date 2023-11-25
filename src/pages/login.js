@@ -24,7 +24,7 @@ export default function Login() {
     };
 
     try {
-      const response = await fetch("http://localhost:8080/api/login", {
+      const response = await fetch("http://localhost:8080/api/users/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -34,13 +34,25 @@ export default function Login() {
 
       const result = await response.json();
 
+      const user = result.user;
+
       if (response.ok) {
-        alert(result.message);
+        try {
+          const aux = {
+            author_user: user.author_user,
+            author_level: user.author_level,
+          };
+          sessionStorage.setItem("login", JSON.stringify(aux));
+          alert(result.message);
+          router.push("/");
+        } catch (error) {
+          alert(error.message);
+        }
       } else {
         alert(result.message);
       }
     } catch (error) {
-      alert(error.message)
+      alert(error.message);
     }
   };
 
