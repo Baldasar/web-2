@@ -10,19 +10,10 @@ export function Header() {
   const router = useRouter();
 
   useEffect(() => {
-    // teste();
     setPageName();
     getUserLogged();
     setCurrentPath(router.pathname);
   }, [router.pathname]);
-
-  const teste = () => {
-    const aux = {
-      author_user: "balda",
-      author_status: "admin",
-    };
-    sessionStorage.setItem("login", JSON.stringify(aux));
-  };
 
   const getUserLogged = () => {
     const aux = sessionStorage.getItem("login");
@@ -45,7 +36,7 @@ export function Header() {
   const showAdmin = () => {
     return (
       userLogged &&
-      userLogged.author_status === "admin" &&
+      userLogged.author_level === "admin" &&
       currentPath !== "/admin"
     );
   };
