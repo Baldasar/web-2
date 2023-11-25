@@ -157,24 +157,7 @@ export function ShowUsers() {
               )}
             </td>
             <td>
-              {editingUserId === user._id ? (
-                <input
-                  className="input-field"
-                  type="text"
-                  value={user.author_user}
-                  onChange={(e) =>
-                    setUsers((prevUsers) =>
-                      prevUsers.map((u) =>
-                        u._id === user._id
-                          ? { ...u, author_user: e.target.value }
-                          : u
-                      )
-                    )
-                  }
-                />
-              ) : (
-                user.author_user
-              )}
+            {user.author_user}
             </td>
             <td>
               {editingUserId === user._id ? (
