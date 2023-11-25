@@ -185,7 +185,7 @@ export function InsertArticle() {
       </div>
 
       <button className="submit-button" type="submit" disabled={isLoading}>
-        {isLoading ? "Aguarde..." : "Cadastrar Artigo"}
+        {isLoading ? "Aguarde..." : "Cadastrar"}
       </button>
     </form>
   );

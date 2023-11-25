@@ -109,12 +109,12 @@ export function ShowArticles() {
       <thead>
         <tr>
           <th>Título</th>
-          <th>Corpo</th>
+          <th>Conteúdo</th>
           <th>Palavras-chave</th>
           <th>Publicado</th>
           <th>Destaque</th>
-          <th>Autor Email</th>
-          <th>Data de Publicação</th>
+          <th>Email do Autor</th>
+          <th>Publicação</th>
           <th>Ações</th>
         </tr>
       </thead>
@@ -195,11 +195,11 @@ export function ShowArticles() {
                     )
                   }
                 >
-                  <option value="published">Publicado</option>
-                  <option value="not-published">Não Publicado</option>
+                  <option value="published">Sim</option>
+                  <option value="not-published">Não</option>
                 </select>
               ) : (
-                article.kb_published ? 'Publicado' : 'Não Publicado'
+                article.kb_published ? 'Sim' : 'Não'
               )}
             </td>
             <td>
@@ -217,11 +217,11 @@ export function ShowArticles() {
                     )
                   }
                 >
-                  <option value="featured">Destaque</option>
-                  <option value="not-featured">Não Destaque</option>
+                  <option value="featured">Sim</option>
+                  <option value="not-featured">Não</option>
                 </select>
               ) : (
-                article.kb_featured ? 'Destaque' : 'Não Destaque'
+                article.kb_featured ? 'Sim' : 'Não'
               )}
             </td>
             <td>

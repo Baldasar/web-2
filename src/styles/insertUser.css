@@ -29,9 +29,10 @@
     width: 100%;
     padding: 8px;
     margin-bottom: 8px;
-    border: 1px solid #ddd;
+    border: 1px solid #d4d4d4;
     border-radius: 3px;
     box-sizing: border-box;
+    background-color: #f1f1f1;
 }
 
 .checkbox-row {
@@ -58,4 +59,8 @@
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    transition: .3s;
+}
+.submit-button:hover {
+    background-color: #2977ac;
 }
