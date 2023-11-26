@@ -82,3 +82,12 @@
 .delete-button:hover {
   background-color: #c0392b;
 }
+
+.limited-height-textarea,
+.limited-height-content {
+  max-height: 75px;
+  overflow: auto;
+  resize: none;
+  padding: 3px;
+  border: 1px solid #ccc;
+}

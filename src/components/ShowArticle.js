@@ -111,10 +111,11 @@ export function ShowArticles() {
           <th>Título</th>
           <th>Conteúdo</th>
           <th>Palavras-chave</th>
-          <th>Publicado</th>
-          <th>Destaque</th>
           <th>Email do Autor</th>
           <th>Publicação</th>
+          <th>Likes</th>
+          <th>Publicado</th>
+          <th>Destaque</th>
           <th>Ações</th>
         </tr>
       </thead>
@@ -144,7 +145,7 @@ export function ShowArticles() {
             <td>
               {editingArticleId === article._id ? (
                 <textarea
-                  className="input-field"
+                  className="input-field limited-height-textarea"
                   value={article.kb_body}
                   onChange={(e) =>
                     setArticles((prevArticles) =>
@@ -157,7 +158,7 @@ export function ShowArticles() {
                   }
                 />
               ) : (
-                article.kb_body
+                <div className="limited-height-content">{article.kb_body}</div>
               )}
             </td>
             <td>
@@ -180,6 +181,28 @@ export function ShowArticles() {
                 article.kb_keywords
               )}
             </td>
+            <td>
+              {editingArticleId === article._id ? (
+                <input
+                  className="input-field"
+                  type="text"
+                  value={article.kb_author_email}
+                  onChange={(e) =>
+                    setArticles((prevArticles) =>
+                      prevArticles.map((a) =>
+                        a._id === article._id
+                          ? { ...a, kb_author_email: e.target.value }
+                          : a
+                      )
+                    )
+                  }
+                />
+              ) : (
+                article.kb_author_email
+              )}
+            </td>
+            <td>{new Date(article.kb_published_date).toLocaleDateString()}</td>
+            <td>{article.kb_liked_count}</td>
             <td>
               {editingArticleId === article._id ? (
                 <select
@@ -224,27 +247,6 @@ export function ShowArticles() {
                 article.kb_featured ? 'Sim' : 'Não'
               )}
             </td>
-            <td>
-              {editingArticleId === article._id ? (
-                <input
-                  className="input-field"
-                  type="text"
-                  value={article.kb_author_email}
-                  onChange={(e) =>
-                    setArticles((prevArticles) =>
-                      prevArticles.map((a) =>
-                        a._id === article._id
-                          ? { ...a, kb_author_email: e.target.value }
-                          : a
-                      )
-                    )
-                  }
-                />
-              ) : (
-                article.kb_author_email
-              )}
-            </td>
-            <td>{new Date(article.kb_published_date).toLocaleDateString()}</td>
             <td className="action-buttons">
               {editingArticleId === article._id ? (
                 <>
