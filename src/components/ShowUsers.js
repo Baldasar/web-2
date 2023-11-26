@@ -4,6 +4,8 @@ export function ShowUsers() {
   const [users, setUsers] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [editingUserId, setEditingUserId] = useState(null);
+  const [editedUserData, setEditedUserData] = useState({});
+  const [isEmailValid, setIsEmailValid] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -27,26 +29,30 @@ export function ShowUsers() {
 
   const handleEditClick = (userId) => {
     setEditingUserId(userId);
+    const userToEdit = users.find((user) => user._id === userId);
+    setEditedUserData(userToEdit);
   };
 
-  const handleSaveClick = async (editedUser) => {
+  const handleSaveClick = async () => {
     const userConfirmation = window.confirm(
       "Tem certeza que deseja salvar as alterações?"
     );
 
-    if (!userConfirmation) {
+    if (!userConfirmation || !isEmailValid) {
+      setEditingUserId(null);
+      setEditedUserData({});
       return;
     }
 
     try {
       const response = await fetch(
-        `http://localhost:8080/api/users/${editedUser._id}`,
+        `http://localhost:8080/api/users/${editedUserData._id}`,
         {
           method: "PUT",
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify(editedUser),
+          body: JSON.stringify(editedUserData),
         }
       );
 
@@ -55,22 +61,22 @@ export function ShowUsers() {
       }
 
       setEditingUserId(null);
-
+      setEditedUserData({});
       const updatedUsers = users.map((user) =>
-        user._id === editedUser._id ? editedUser : user
+        user._id === editedUserData._id ? editedUserData : user
       );
       setUsers(updatedUsers);
 
       alert("Usuário atualizado com sucesso!");
     } catch (error) {
       console.error("Erro ao salvar usuário:", error.message);
-
       alert(`Erro ao salvar usuário: ${error.message}`);
     }
   };
 
   const handleCancelClick = () => {
     setEditingUserId(null);
+    setEditedUserData({});
   };
 
   const handleDeleteClick = async (userId) => {
@@ -100,6 +106,16 @@ export function ShowUsers() {
     }
   };
 
+  const handleInputChange = (field, value) => {
+    if (field === "author_email") {
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      const isValid = emailRegex.test(value);
+      setIsEmailValid(isValid);
+    }
+
+    setEditedUserData((prevData) => ({ ...prevData, [field]: value }));
+  };
+
   return (
     <table className="user-table">
       <thead>
@@ -121,15 +137,9 @@ export function ShowUsers() {
                 <input
                   className="input-field"
                   type="text"
-                  value={user.author_name || ""}
+                  value={editedUserData.author_name || ""}
                   onChange={(e) =>
-                    setUsers((prevUsers) =>
-                      prevUsers.map((u) =>
-                        u._id === user._id
-                          ? { ...u, author_name: e.target.value }
-                          : u
-                      )
-                    )
+                    handleInputChange("author_name", e.target.value)
                   }
                 />
               ) : (
@@ -138,40 +148,33 @@ export function ShowUsers() {
             </td>
             <td>
               {editingUserId === user._id ? (
-                <input
-                  className="input-field"
-                  type="text"
-                  value={user.author_email}
-                  onChange={(e) =>
-                    setUsers((prevUsers) =>
-                      prevUsers.map((u) =>
-                        u._id === user._id
-                          ? { ...u, author_email: e.target.value }
-                          : u
-                      )
-                    )
-                  }
-                />
+                <>
+                  <input
+                    className={`input-field ${
+                      isEmailValid ? "" : "invalid-email"
+                    }`}
+                    type="text"
+                    value={editedUserData.author_email || ""}
+                    onChange={(e) =>
+                      handleInputChange("author_email", e.target.value)
+                    }
+                  />
+                  {!isEmailValid && (
+                    <p className="error-message">E-mail inválido</p>
+                  )}
+                </>
               ) : (
                 user.author_email
               )}
             </td>
-            <td>
-            {user.author_user}
-            </td>
+            <td>{user.author_user}</td>
             <td>
               {editingUserId === user._id ? (
                 <select
                   className="input-field"
-                  value={user.author_level}
+                  value={editedUserData.author_level || ""}
                   onChange={(e) =>
-                    setUsers((prevUsers) =>
-                      prevUsers.map((u) =>
-                        u._id === user._id
-                          ? { ...u, author_level: e.target.value }
-                          : u
-                      )
-                    )
+                    handleInputChange("author_level", e.target.value)
                   }
                 >
                   <option value="admin">Admin</option>
@@ -185,14 +188,11 @@ export function ShowUsers() {
               {editingUserId === user._id ? (
                 <select
                   className="input-field"
-                  value={user.author_status ? "ativo" : "inativo"}
+                  value={editedUserData.author_status ? "ativo" : "inativo"}
                   onChange={(e) =>
-                    setUsers((prevUsers) =>
-                      prevUsers.map((u) =>
-                        u._id === user._id
-                          ? { ...u, author_status: e.target.value === "ativo" }
-                          : u
-                      )
+                    handleInputChange(
+                      "author_status",
+                      e.target.value === "ativo"
                     )
                   }
                 >
@@ -209,10 +209,7 @@ export function ShowUsers() {
             <td className="action-buttons">
               {editingUserId === user._id ? (
                 <>
-                  <button
-                    className="save-button"
-                    onClick={() => handleSaveClick(user)}
-                  >
+                  <button className="save-button" onClick={handleSaveClick}>
                     Salvar
                   </button>
                   <button className="cancel-button" onClick={handleCancelClick}>

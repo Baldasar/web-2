@@ -2,8 +2,10 @@ import React, { useState, useEffect } from "react";
 
 export function ShowArticles() {
   const [articles, setArticles] = useState([]);
+  const [originalArticles, setOriginalArticles] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [editingArticleId, setEditingArticleId] = useState(null);
+  const [isEmailValid, setIsEmailValid] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -16,6 +18,7 @@ export function ShowArticles() {
 
         const data = await response.json();
         setArticles(data);
+        setOriginalArticles(data);
         setIsLoading(false);
       } catch (error) {
         console.error("Erro ao buscar artigos:", error.message);
@@ -34,7 +37,7 @@ export function ShowArticles() {
       "Tem certeza que deseja salvar as alterações?"
     );
 
-    if (!confirmation) {
+    if (!confirmation || !isEmailValid) {
       return;
     }
 
@@ -71,6 +74,7 @@ export function ShowArticles() {
 
   const handleCancelClick = () => {
     setEditingArticleId(null);
+    setArticles(originalArticles);
   };
 
   const handleDeleteClick = async (articleId) => {
@@ -104,6 +108,21 @@ export function ShowArticles() {
     }
   };
 
+  const handleInputChange = (field, value) => {
+    if (field === "kb_author_email") {
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      const isValid = emailRegex.test(value);
+      setIsEmailValid(isValid);
+    }
+
+    setArticles((prevArticles) =>
+      prevArticles.map((article) =>
+        article._id === editingArticleId
+          ? { ...article, [field]: value }
+          : article
+      )
+    );
+  };
   return (
     <table className="article-table">
       <thead>
@@ -183,20 +202,21 @@ export function ShowArticles() {
             </td>
             <td>
               {editingArticleId === article._id ? (
-                <input
-                  className="input-field"
-                  type="text"
-                  value={article.kb_author_email}
-                  onChange={(e) =>
-                    setArticles((prevArticles) =>
-                      prevArticles.map((a) =>
-                        a._id === article._id
-                          ? { ...a, kb_author_email: e.target.value }
-                          : a
-                      )
-                    )
-                  }
-                />
+                <>
+                  <input
+                    className={`input-field ${
+                      isEmailValid ? "" : "invalid-email"
+                    }`}
+                    type="text"
+                    value={article.kb_author_email || ""}
+                    onChange={(e) =>
+                      handleInputChange("kb_author_email", e.target.value)
+                    }
+                  />
+                  {!isEmailValid && (
+                    <p className="error-message">E-mail inválido</p>
+                  )}
+                </>
               ) : (
                 article.kb_author_email
               )}
@@ -212,7 +232,10 @@ export function ShowArticles() {
                     setArticles((prevArticles) =>
                       prevArticles.map((a) =>
                         a._id === article._id
-                          ? { ...a, kb_published: e.target.value === "published" }
+                          ? {
+                              ...a,
+                              kb_published: e.target.value === "published",
+                            }
                           : a
                       )
                     )
@@ -221,8 +244,10 @@ export function ShowArticles() {
                   <option value="published">Sim</option>
                   <option value="not-published">Não</option>
                 </select>
+              ) : article.kb_published ? (
+                "Sim"
               ) : (
-                article.kb_published ? 'Sim' : 'Não'
+                "Não"
               )}
             </td>
             <td>
@@ -243,8 +268,10 @@ export function ShowArticles() {
                   <option value="featured">Sim</option>
                   <option value="not-featured">Não</option>
                 </select>
+              ) : article.kb_featured ? (
+                "Sim"
               ) : (
-                article.kb_featured ? 'Sim' : 'Não'
+                "Não"
               )}
             </td>
             <td className="action-buttons">
