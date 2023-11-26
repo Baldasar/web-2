@@ -61,6 +61,7 @@
     cursor: pointer;
     transition: .3s;
 }
+
 .submit-button:hover {
     background-color: #2977ac;
 }

@@ -19,6 +19,7 @@
     cursor: pointer;
     transition: .3s;
 }
+
 .menu-button:hover {
     background-color: #2977ac;
 }
