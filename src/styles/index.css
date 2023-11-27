@@ -1,10 +1,70 @@
 .article-card {
-    border: 1px solid #ddd;
+    border: 1px solid #c4c4c4;
     border-radius: 8px;
     padding: 16px;
+    width: calc(50% - 32px);
     margin: 16px;
+    text-align: justify;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    background-color: #fff;
+    background-color: #f1f1f1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.article-card:hover {
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    background-color: #eeeeee;
+}
+
+#articles,
+#featured-articles,
+#most-liked-articles {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    text-align: center;
+    height: 100%;
+}
+
+.subtitle {
+    text-align: center;
+    color: #fff;
+    background-color: #505050;
+    border-radius: 5px;
+    margin: 1rem 20rem;
+    padding: 10px;
+    box-shadow: 0 8px 10px rgba(0, 0, 0, 0.2);
+}
+
+#interact {
+    margin: 0 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#like-button {
+    padding: 10px 20px;
+    margin-right: auto;
+    margin-left: 1rem;
+    background-color: #28a745;
+}
+#like-button:hover {
+    background-color: #218838;
+}
+#like-button:active {
+    color: #c5c5c5;
+    background-color: #186328;
+    transform: translateY(1px);
+}
+
+#open-button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+}
+#open-button:hover {
+    background-color: #004b9b;
 }
 
 #search-bar {
@@ -16,15 +76,31 @@
 
 input {
     flex: 1;
+    margin: 1rem;
     padding: 8px;
     margin-right: 8px;
-    max-width: 150px;
+    max-width: 20rem;
+    text-align: center;
+}
+input:hover{
+    border: 2px solid #007bff;
+    border-radius: 3px;
+    background-color: #f2f8ff;
 }
 
 button {
-    padding: 8px 12px;
+    padding: 10px 15px;
+    background-color: #007bff;
+    color: #fff;
+    transition: .3s;
+    border: 0 transparent;
+    border-radius: 3%;
 }
-
 button:hover {
-    background-color: #0056b3;
+    background-color: #004b9b;
+}
+button:active {
+    color: #c5c5c5;
+    background-color: #002c5a;
+    transform: translateY(1px);
 }

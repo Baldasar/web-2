@@ -4,8 +4,14 @@ import { Header } from "../components/Header";
 const ArticleCard = ({ article }) => (
   <div className="article-card" key={article.kb_id}>
     <h3>{article.kb_title}</h3>
-    <p>{article.kb_body}</p>
-    <p>Likes: {article.kb_liked_count}</p>
+    <br/>
+    <p id='body'>{article.kb_body}</p>
+    <br/>
+    <div id='interact'>
+      <p id='like-count'>Likes: {article.kb_liked_count}</p>
+      <button id='like-button'>Like</button>
+      <button id='open-button'>Abrir</button>
+    </div>
   </div>
 );
 
@@ -74,14 +80,14 @@ export default function Home() {
         <div id="search-bar">
           <input
             type="text"
-            placeholder="Buscar por palavra-chave"
+            placeholder="Buscar por palavras-chave"
             value={searchKeyword}
             onChange={(e) => setSearchKeyword(e.target.value)}
           />
           <button onClick={handleSearch}>Buscar</button>
         </div>
+        <h2 className="subtitle">Artigos</h2>
         <div id="articles">
-          <h2>Artigos</h2>
           {searchedArticles.length > 0
             ? searchedArticles.map((article) => (
                 <ArticleCard key={article.kb_id} article={article} />
@@ -89,15 +95,15 @@ export default function Home() {
             : articles.map((article) => (
                 <ArticleCard key={article.kb_id} article={article} />
               ))}
-        </div>
+        </div>        
+        <h2 className="subtitle">Artigos em Destaque</h2>
         <div id="featured-articles">
-          <h2>Artigos em Destaque</h2>
           {featuredArticles.map((article) => (
             <ArticleCard key={article.kb_id} article={article} />
           ))}
         </div>
+        <h2 className="subtitle">Artigos Mais Curtidos</h2>
         <div id="most-liked-articles">
-          <h2>Artigos Mais Curtidos</h2>
           {mostLikedArticles.map((article) => (
             <ArticleCard key={article.kb_id} article={article} />
           ))}
