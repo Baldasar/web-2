@@ -1,0 +1,30 @@
+.article-card {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 16px;
+    margin: 16px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+}
+
+#search-bar {
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+input {
+    flex: 1;
+    padding: 8px;
+    margin-right: 8px;
+    max-width: 150px;
+}
+
+button {
+    padding: 8px 12px;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
