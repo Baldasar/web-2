@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Header } from "../components/Header";
+import { Footer } from "../components/Footer";
 
 const ArticleCard = ({ article }) => (
   <div className="article-card" key={article.kb_id}>
@@ -109,6 +110,7 @@ export default function Home() {
           ))}
         </div>
       </div>
+      <Footer />
     </>
   );
 }
