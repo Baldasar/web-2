@@ -1,40 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { Header } from "../components/Header";
 import { Footer } from "../components/Footer";
-
-const ArticleCard = ({ article, onOpen }) => (
-  <div className="article-card" key={article.kb_id}>
-    <h3>{article.kb_title}</h3>
-    <br/>
-    <div id='interact'>
-      <p id='like-count'>Likes: {article.kb_liked_count}</p>
-      <button id='like-button'>Like</button>
-      <button id='open-button' onClick={() => onOpen(article)}>Abrir</button>
-    </div>
-  </div>
-);
-
-const ArticleDialog = ({ article, onClose }) => (
-  <div className="article-dialog-overlay">
-    <div className="article-dialog">
-      <h2>{article.kb_title}</h2>
-      <br/>
-      <p>{article.kb_body}</p>
-      <br/>
-      <div id='interact'>
-        <p id='like-count'>Likes: {article.kb_liked_count}</p>
-        <button id='like-button'>Like</button>
-        <button id='close-button' onClick={onClose}>Fechar</button>
-      </div>
-    </div>
-  </div>
-);
+import { ArticleDialog } from "../components/ArticleDialog";
 
 export default function Home() {
   const [articles, setArticles] = useState([]);
   const [featuredArticles, setFeaturedArticles] = useState([]);
   const [mostLikedArticles, setMostLikedArticles] = useState([]);
-  const [searchedArticles, setSearchedArticles] = useState([]);
   const [searchKeyword, setSearchKeyword] = useState("");
   const [selectedArticle, setSelectedArticle] = useState(null);
 
@@ -48,16 +20,18 @@ export default function Home() {
         }
 
         const data = await response.json();
-        setArticles(data);
-
         const featured = data.filter((article) => article.kb_featured);
         setFeaturedArticles(featured);
 
-        const sortedByLikes = data.sort(
-          (a, b) => b.kb_liked_count - a.kb_liked_count
-        );
-        const mostLiked = sortedByLikes.slice(0, 10);
+        const newData = data.filter((article) => !article.kb_featured);
+        const mostLiked = newData.slice(0, 10);
         setMostLikedArticles(mostLiked);
+
+        const combinedArticles = [...featured, ...mostLiked];
+        const restArticles = data.filter(
+          (article) => !combinedArticles.includes(article)
+        );
+        setArticles(restArticles);
       } catch (error) {
         console.error("Erro ao buscar artigos:", error.message);
       }
@@ -66,35 +40,64 @@ export default function Home() {
     fetchData();
   }, []);
 
-  const searchByKeyword = async (keyword) => {
+  const likeArticle = async (id) => {
     try {
       const response = await fetch(
-        `http://localhost:8080/api/articles?keyword=${keyword}`
+        `http://localhost:8080/api/articles/${id}/like`,
+        {
+          method: "POST",
+        }
       );
 
       if (!response.ok) {
-        throw new Error(
-          `Erro ao buscar artigos por palavra-chave: ${response.statusText}`
-        );
+        throw new Error(`Erro ao curtir o artigo: ${response.statusText}`);
       }
 
-      const data = await response.json();
-      setSearchedArticles(data);
+      setArticles((prevArticles) =>
+        prevArticles.map((article) =>
+          article._id === id
+            ? { ...article, kb_liked_count: article.kb_liked_count + 1 }
+            : article
+        )
+      );
+
+      setFeaturedArticles((prevFeaturedArticles) =>
+        prevFeaturedArticles.map((article) =>
+          article._id === id
+            ? { ...article, kb_liked_count: article.kb_liked_count + 1 }
+            : article
+        )
+      );
+
+      setMostLikedArticles((prevMostLikedArticles) =>
+        prevMostLikedArticles.map((article) =>
+          article._id === id
+            ? { ...article, kb_liked_count: article.kb_liked_count + 1 }
+            : article
+        )
+      );
+    } catch (error) {
+      console.error("Erro ao curtir o artigo:", error.message);
+    }
+  };
+
+  const searchByKeyword = async (keyword) => {
+    try {
     } catch (error) {
       console.error("Erro ao buscar artigos por palavra-chave:", error.message);
     }
   };
 
-  const openArticleDialog = (article) => {
+  const handleSearch = () => {
+    searchByKeyword(searchKeyword);
+  };
+
+  const onOpen = (article) => {
     setSelectedArticle(article);
   };
 
-  const closeArticleDialog = () => {
+  const onClose = () => {
     setSelectedArticle(null);
-  };
-
-  const handleSearch = () => {
-    searchByKeyword(searchKeyword);
   };
 
   return (
@@ -110,45 +113,75 @@ export default function Home() {
           />
           <button onClick={handleSearch}>Buscar</button>
         </div>
-        {selectedArticle && (
-          <div className="overlay">
-            <ArticleDialog
-              article={selectedArticle}
-              onClose={closeArticleDialog}
-            />
-          </div>
-        )}
-        <h2 className="subtitle">Artigos</h2>
-        <div id="articles">
-          {searchedArticles.length > 0
-            ? searchedArticles.map((article) => (
-                <ArticleCard
-                  key={article.kb_id}
-                  article={article}
-                  onOpen={openArticleDialog}
-                />
-              ))
-            : articles.map((article) => (
-                <ArticleCard
-                  key={article.kb_id}
-                  article={article}
-                  onOpen={openArticleDialog}
-                />
-              ))}
-        </div>        
         <h2 className="subtitle">Artigos em Destaque</h2>
         <div id="featured-articles">
           {featuredArticles.map((article) => (
-            <ArticleCard key={article.kb_id} article={article} />
+            <div key={article._id} className="article-card">
+              <h3>{article.kb_title}</h3>
+              <br />
+              <div id="interact">
+                <p id="like-count">Likes: {article.kb_liked_count}</p>
+                <button
+                  id="like-button"
+                  onClick={() => likeArticle(article._id)}
+                >
+                  Like
+                </button>
+                <button id="open-button" onClick={() => onOpen(article)}>
+                  Abrir
+                </button>
+              </div>
+            </div>
           ))}
         </div>
         <h2 className="subtitle">Artigos Mais Curtidos</h2>
         <div id="most-liked-articles">
           {mostLikedArticles.map((article) => (
-            <ArticleCard key={article.kb_id} article={article} />
+            <div key={article._id} className="article-card">
+              <h3>{article.kb_title}</h3>
+              <br />
+              <div id="interact">
+                <p id="like-count">Likes: {article.kb_liked_count}</p>
+                <button
+                  id="like-button"
+                  onClick={() => likeArticle(article._id)}
+                >
+                  Like
+                </button>
+                <button id="open-button" onClick={() => onOpen(article)}>
+                  Abrir
+                </button>
+              </div>
+            </div>
+          ))}
+        </div>
+        <h2 className="subtitle">Artigos</h2>
+        <div id="articles">
+          {articles.map((article) => (
+            <div key={article._id} className="article-card">
+              <h3>{article.kb_title}</h3>
+              <br />
+              <div id="interact">
+                <p id="like-count">Likes: {article.kb_liked_count}</p>
+                <button
+                  id="like-button"
+                  onClick={() => likeArticle(article._id)}
+                >
+                  Like
+                </button>
+                <button id="open-button" onClick={() => onOpen(article)}>
+                  Abrir
+                </button>
+              </div>
+            </div>
           ))}
         </div>
       </div>
+
+      {selectedArticle && (
+        <ArticleDialog article={selectedArticle} onClose={onClose} />
+      )}
+
       <Footer />
     </>
   );
