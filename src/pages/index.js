@@ -2,16 +2,30 @@ import React, { useState, useEffect } from "react";
 import { Header } from "../components/Header";
 import { Footer } from "../components/Footer";
 
-const ArticleCard = ({ article }) => (
+const ArticleCard = ({ article, onOpen }) => (
   <div className="article-card" key={article.kb_id}>
     <h3>{article.kb_title}</h3>
-    <br/>
-    <p id='body'>{article.kb_body}</p>
     <br/>
     <div id='interact'>
       <p id='like-count'>Likes: {article.kb_liked_count}</p>
       <button id='like-button'>Like</button>
-      <button id='open-button'>Abrir</button>
+      <button id='open-button' onClick={() => onOpen(article)}>Abrir</button>
+    </div>
+  </div>
+);
+
+const ArticleDialog = ({ article, onClose }) => (
+  <div className="article-dialog-overlay">
+    <div className="article-dialog">
+      <h2>{article.kb_title}</h2>
+      <br/>
+      <p>{article.kb_body}</p>
+      <br/>
+      <div id='interact'>
+        <p id='like-count'>Likes: {article.kb_liked_count}</p>
+        <button id='like-button'>Like</button>
+        <button id='close-button' onClick={onClose}>Fechar</button>
+      </div>
     </div>
   </div>
 );
@@ -22,6 +36,7 @@ export default function Home() {
   const [mostLikedArticles, setMostLikedArticles] = useState([]);
   const [searchedArticles, setSearchedArticles] = useState([]);
   const [searchKeyword, setSearchKeyword] = useState("");
+  const [selectedArticle, setSelectedArticle] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -70,6 +85,14 @@ export default function Home() {
     }
   };
 
+  const openArticleDialog = (article) => {
+    setSelectedArticle(article);
+  };
+
+  const closeArticleDialog = () => {
+    setSelectedArticle(null);
+  };
+
   const handleSearch = () => {
     searchByKeyword(searchKeyword);
   };
@@ -87,14 +110,30 @@ export default function Home() {
           />
           <button onClick={handleSearch}>Buscar</button>
         </div>
+        {selectedArticle && (
+          <div className="overlay">
+            <ArticleDialog
+              article={selectedArticle}
+              onClose={closeArticleDialog}
+            />
+          </div>
+        )}
         <h2 className="subtitle">Artigos</h2>
         <div id="articles">
           {searchedArticles.length > 0
             ? searchedArticles.map((article) => (
-                <ArticleCard key={article.kb_id} article={article} />
+                <ArticleCard
+                  key={article.kb_id}
+                  article={article}
+                  onOpen={openArticleDialog}
+                />
               ))
             : articles.map((article) => (
-                <ArticleCard key={article.kb_id} article={article} />
+                <ArticleCard
+                  key={article.kb_id}
+                  article={article}
+                  onOpen={openArticleDialog}
+                />
               ))}
         </div>        
         <h2 className="subtitle">Artigos em Destaque</h2>

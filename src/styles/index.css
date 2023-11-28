@@ -1,10 +1,10 @@
 .article-card {
     border: 1px solid #c4c4c4;
     border-radius: 8px;
-    padding: 16px;
-    width: calc(50% - 32px);
-    margin: 16px;
-    text-align: justify;
+    padding: 1rem;
+    width: calc(25% - 16px);
+    margin: 8px;
+    text-align: center;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     background-color: #f1f1f1;
     display: flex;
@@ -21,7 +21,7 @@
 #most-liked-articles {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
+    justify-content: space-around;
     text-align: center;
     height: 100%;
 }
@@ -37,7 +37,7 @@
 }
 
 #interact {
-    margin: 0 1rem;
+    margin: 1rem 1rem 0 1rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -48,6 +48,7 @@
     margin-right: auto;
     margin-left: 1rem;
     background-color: #28a745;
+    transition: 0.3s;
 }
 #like-button:hover {
     background-color: #218838;
@@ -62,6 +63,7 @@
     padding: 10px 20px;
     background-color: #007bff;
     color: #fff;
+    transition: 0.3s;
 }
 #open-button:hover {
     background-color: #004b9b;

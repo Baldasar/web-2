@@ -5,6 +5,7 @@ import "../styles/index.css";
 
 import "../styles/header.css";
 import "../styles/footer.css";
+import "../styles/dialog.css"
 import "../styles/showArticle.css";
 import "../styles/insertUser.css";
 import "../styles/showUsers.css";
