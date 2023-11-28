@@ -1,20 +1,28 @@
 import React from "react";
 
 export function Footer() {
-
-  const year = new Date().getFullYear(); 
+  const year = new Date().getFullYear();
 
   const scrollToTop = () => {
     window.scrollTo({
       top: 0,
-      behavior: "smooth"
+      behavior: "smooth",
     });
   };
 
   return (
-    <header id="footer">
-      <h4>Desenvolvido por: &nbsp; Leonardo Spilere & Lucas Baldasar &nbsp; - &nbsp; {year} &copy;</h4>
-      <button id="scroll" onClick={scrollToTop}>Topo</button>
-    </header>
+    <footer id="footer">
+      <div className="footer-content">
+        <h4>
+          Desenvolvido por:{" "}
+          <span>Leonardo Spilere & Lucas Baldasar - {year} &copy;</span>
+        </h4>
+      </div>
+      <div className="footer-content">
+        <button className="scroll-button" onClick={scrollToTop}>
+          Topo
+        </button>
+      </div>
+    </footer>
   );
 }
