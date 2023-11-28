@@ -41,11 +41,21 @@
 }
 
 #close-button {
-  padding: 10px 20px;
-  background-color: #ff3b3b;
-  color: #fff;
+  font-weight: bold;
+  padding: 5px 10px;
+  background-color: rgba(0, 0, 0, 0);
+  color: #ff3b3b;
+  border: 2px solid #ff3b3b;
   transition: 0.3s;
 }
 #close-button:hover {
-  background-color: #bd2a2a;
+  background-color: #ff3b3b;
+  color: #fff;
+}
+
+#dialog-header {
+  margin: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }

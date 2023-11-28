@@ -37,17 +37,14 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 20px;
 }
 
 .label {
-    margin-right: 10px;
     width: 100px;
     user-select: none;
 }
 
 .input {
-    padding: 10px;
     border: 1px solid #ccc;
     background-color: #f0f0f0;
     border-radius: 5px;
@@ -57,18 +54,19 @@
 
 .custom-button {
     display: inline-block;
-    padding: 15px;
-    width: 150px;
+    padding: 10px;
+    width: 130px;
     color: #fff;
     text-align: center;
     text-decoration: none;
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    margin-right: 10px;
+    margin: 1rem
 }
 
 .login-button {
+    font-size: medium;
     background-color: #28a745;
     transition: 0.3s;
 }
