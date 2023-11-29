@@ -59,9 +59,28 @@
     transform: translateY(1px);
 }
 
+#like-button-disabled {
+    padding: 10px 20px;
+    margin-right: auto;
+    margin-left: 1rem;
+    color: #218838;
+    border: 1px solid #28a745;
+    border-radius: 3px;
+    background-color: rgba(0, 0, 0, 0.1);
+    transition: 0.3s;
+}
+#like-button-disabled:hover {
+    background-color: rgba(0, 0, 0, 0.3);
+}
+#like-button-disabled:active {
+    background-color: rgba(0, 0, 0, 0.5);
+    transform: translateY(1px);
+}
+
 #open-button {
     padding: 10px 20px;
     background-color: #007bff;
+    border-radius: 3px;
     color: #fff;
     transition: 0.3s;
 }

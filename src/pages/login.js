@@ -43,7 +43,6 @@ export default function Login() {
             author_level: user.author_level,
           };
           sessionStorage.setItem("login", JSON.stringify(aux));
-          alert(result.message);
           router.push("/");
         } catch (error) {
           alert(error.message);

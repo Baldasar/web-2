@@ -9,6 +9,7 @@ export default function Home() {
   const [mostLikedArticles, setMostLikedArticles] = useState([]);
   const [searchKeyword, setSearchKeyword] = useState("");
   const [selectedArticle, setSelectedArticle] = useState(null);
+  const [userLogged, setUserLogged] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -38,7 +39,20 @@ export default function Home() {
     };
 
     fetchData();
+    getUserLogged();
   }, []);
+
+  const getUserLogged = () => {
+    const aux = sessionStorage.getItem("login");
+    if (aux) {
+      const parsed = JSON.parse(aux);
+      setUserLogged(parsed);
+    }
+  };
+
+  const askLogin = () => {
+    alert("Você precisa estar logado para curtir um artigo!");
+  }
 
   const likeArticle = async (id) => {
     try {
@@ -121,12 +135,21 @@ export default function Home() {
               <br />
               <div id="interact">
                 <p id="like-count">Likes: {article.kb_liked_count}</p>
-                <button
-                  id="like-button"
-                  onClick={() => likeArticle(article._id)}
-                >
-                  Like
-                </button>
+                {!userLogged ? (
+                  <button
+                    id="like-button-disabled"
+                    onClick={() => askLogin()}
+                  >
+                    Like
+                  </button>
+                ) : (
+                  <button
+                    id="like-button"
+                    onClick={() => likeArticle(article._id)}
+                  >
+                    Like
+                  </button>
+                )}
                 <button id="open-button" onClick={() => onOpen(article)}>
                   Abrir
                 </button>
@@ -142,12 +165,21 @@ export default function Home() {
               <br />
               <div id="interact">
                 <p id="like-count">Likes: {article.kb_liked_count}</p>
-                <button
-                  id="like-button"
-                  onClick={() => likeArticle(article._id)}
-                >
-                  Like
-                </button>
+                {!userLogged ? (
+                  <button
+                    id="like-button-disabled"
+                    onClick={() => askLogin()}
+                  >
+                    Like
+                  </button>
+                ) : (
+                  <button
+                    id="like-button"
+                    onClick={() => likeArticle(article._id)}
+                  >
+                    Like
+                  </button>
+                )}
                 <button id="open-button" onClick={() => onOpen(article)}>
                   Abrir
                 </button>
@@ -163,12 +195,21 @@ export default function Home() {
               <br />
               <div id="interact">
                 <p id="like-count">Likes: {article.kb_liked_count}</p>
-                <button
-                  id="like-button"
-                  onClick={() => likeArticle(article._id)}
-                >
-                  Like
-                </button>
+                {!userLogged ? (
+                  <button
+                    id="like-button-disabled"
+                    onClick={() => askLogin()}
+                  >
+                    Like
+                  </button>
+                ) : (
+                  <button
+                    id="like-button"
+                    onClick={() => likeArticle(article._id)}
+                  >
+                    Like
+                  </button>
+                )}
                 <button id="open-button" onClick={() => onOpen(article)}>
                   Abrir
                 </button>

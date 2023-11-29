@@ -49,6 +49,7 @@ export function Header() {
     sessionStorage.removeItem("login");
     setUserLogged(null);
     router.push("/");
+    window.location.reload();
   };
 
   return (
