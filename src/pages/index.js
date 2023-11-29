@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Header } from "../components/Header";
 import { Footer } from "../components/Footer";
+import { ArticleCard } from "../components/ArticleCard";
 import { ArticleDialog } from "../components/ArticleDialog";
 
 export default function Home() {
@@ -130,91 +131,40 @@ export default function Home() {
         <h2 className="subtitle">Artigos em Destaque</h2>
         <div id="featured-articles">
           {featuredArticles.map((article) => (
-            <div key={article._id} className="article-card">
-              <h3>{article.kb_title}</h3>
-              <br />
-              <div id="interact">
-                <p id="like-count">Likes: {article.kb_liked_count}</p>
-                {!userLogged ? (
-                  <button
-                    id="like-button-disabled"
-                    onClick={() => askLogin()}
-                  >
-                    Like
-                  </button>
-                ) : (
-                  <button
-                    id="like-button"
-                    onClick={() => likeArticle(article._id)}
-                  >
-                    Like
-                  </button>
-                )}
-                <button id="open-button" onClick={() => onOpen(article)}>
-                  Abrir
-                </button>
-              </div>
-            </div>
+            <ArticleCard
+              key={article._id}
+              article={article}
+              userLogged={userLogged}
+              askLogin={askLogin}
+              likeArticle={likeArticle}
+              onOpen={onOpen}
+            />
           ))}
         </div>
         <h2 className="subtitle">Artigos Mais Curtidos</h2>
         <div id="most-liked-articles">
           {mostLikedArticles.map((article) => (
-            <div key={article._id} className="article-card">
-              <h3>{article.kb_title}</h3>
-              <br />
-              <div id="interact">
-                <p id="like-count">Likes: {article.kb_liked_count}</p>
-                {!userLogged ? (
-                  <button
-                    id="like-button-disabled"
-                    onClick={() => askLogin()}
-                  >
-                    Like
-                  </button>
-                ) : (
-                  <button
-                    id="like-button"
-                    onClick={() => likeArticle(article._id)}
-                  >
-                    Like
-                  </button>
-                )}
-                <button id="open-button" onClick={() => onOpen(article)}>
-                  Abrir
-                </button>
-              </div>
-            </div>
+            <ArticleCard
+              key={article._id}
+              article={article}
+              userLogged={userLogged}
+              askLogin={askLogin}
+              likeArticle={likeArticle}
+              onOpen={onOpen}
+            />
           ))}
         </div>
         <h2 className="subtitle">Artigos</h2>
         <div id="articles">
           {articles.map((article) => (
-            <div key={article._id} className="article-card">
-              <h3>{article.kb_title}</h3>
-              <br />
-              <div id="interact">
-                <p id="like-count">Likes: {article.kb_liked_count}</p>
-                {!userLogged ? (
-                  <button
-                    id="like-button-disabled"
-                    onClick={() => askLogin()}
-                  >
-                    Like
-                  </button>
-                ) : (
-                  <button
-                    id="like-button"
-                    onClick={() => likeArticle(article._id)}
-                  >
-                    Like
-                  </button>
-                )}
-                <button id="open-button" onClick={() => onOpen(article)}>
-                  Abrir
-                </button>
-              </div>
-            </div>
+            <ArticleCard
+              key={article._id}
+              article={article}
+              userLogged={userLogged}
+              askLogin={askLogin}
+              likeArticle={likeArticle}
+              onOpen={onOpen}
+            />
           ))}
         </div>
       </div>
