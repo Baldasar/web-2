@@ -53,7 +53,7 @@ export default function Home() {
 
   const askLogin = () => {
     alert("Você precisa estar logado para curtir um artigo!");
-  }
+  };
 
   const likeArticle = async (id) => {
     try {
@@ -98,6 +98,34 @@ export default function Home() {
 
   const searchByKeyword = async (keyword) => {
     try {
+      const response = await fetch("http://localhost:8080/api/articles");
+
+      if (!response.ok) {
+        throw new Error(`Erro ao buscar artigos: ${response.statusText}`);
+      }
+
+      const data = await response.json();
+
+      const filteredArticles = data.filter((article) =>
+        article.kb_keywords.includes(keyword)
+      );
+
+      const featured = filteredArticles.filter(
+        (article) => article.kb_featured
+      );
+      setFeaturedArticles(featured);
+
+      const newData = filteredArticles.filter(
+        (article) => !article.kb_featured
+      );
+      const mostLiked = newData.slice(0, 10);
+      setMostLikedArticles(mostLiked);
+
+      const combinedArticles = [...featured, ...mostLiked];
+      const restArticles = filteredArticles.filter(
+        (article) => !combinedArticles.includes(article)
+      );
+      setArticles(restArticles);
     } catch (error) {
       console.error("Erro ao buscar artigos por palavra-chave:", error.message);
     }
