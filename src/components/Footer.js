@@ -13,15 +13,17 @@ export function Footer() {
   return (
     <footer id="footer">
       <div className="footer-content">
-        <h4>
-          Desenvolvido por:{" "}
-          <span>Leonardo Spilere & Lucas Baldasar - {year} &copy;</span>
-        </h4>
-      </div>
-      <div className="footer-content">
-        <button className="scroll-button" onClick={scrollToTop}>
-          Topo
-        </button>
+        <div className="footer-text">
+          <p>
+            Desenvolvido por:{" "}
+            <span>Leonardo Spilere & Lucas Baldasar - {year} &copy;</span>
+          </p>
+        </div>
+        <div className="footer-button">
+          <button className="scroll-button" onClick={scrollToTop}>
+            Topo
+          </button>
+        </div>
       </div>
     </footer>
   );
